@@ -1,6 +1,10 @@
 from pathlib import Path
 from setuptools import setup, find_packages
 
+"""
+setup script
+"""
+
 setup(
         name="pywpkit",
         version='0.0.1',
