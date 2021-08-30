@@ -1,6 +1,6 @@
-import wpkit
+import pywpkit
 
-kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
+kit = pywpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
 
 contacts = kit._fetchcontacts()
 

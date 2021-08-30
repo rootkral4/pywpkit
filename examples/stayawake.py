@@ -1,8 +1,8 @@
 from threading import Thread
 from time import sleep
-import wpkit
+import pywpkit
 
-kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
+kit = pywpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
 Thread(target=kit._stayawake).start()
 
 sleep(20) # sleep for 20 seconds

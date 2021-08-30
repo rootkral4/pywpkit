@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from pathlib import Path
 
 setup(
-        name="wpkit", 
+        name="pywpkit", 
         version='0.0.1',
         author="rootkral4",
         author_email="rootkral4@hotmail.com",
@@ -11,7 +11,7 @@ setup(
         long_description_content_type='text/markdown',
         packages=find_packages(),
         install_requires=["keyboard"],
-        url='https://github.com/rootkral4/wpkit',
+        url='https://github.com/rootkral4/pywpkit',
         keywords=['whatsapp', 'web whatsapp'],
 
 )

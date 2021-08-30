@@ -1,7 +1,7 @@
-import wpkit
+import pywpkit
 import pandas
 
-kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
+kit = pywpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
 
 datafr = pandas.read_csv('Contacts.csv')
 msg = "sup"

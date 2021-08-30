@@ -1,8 +1,8 @@
-import wpkit
+import pywpkit
 import pandas
 import vobject
 
-kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
+kit = pywpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
 msg="sup"
 
 vcf_path = "Contacts.vcf"

@@ -1,5 +1,5 @@
 
-# WPKIT (Whatsapp kit)
+# PYWPKIT (Python whatsapp kit)
 
   
 
@@ -23,9 +23,9 @@ Python package to interact with whatsapp using different methods
 
   
 
-    import wpkit
+    import pywpkit
     
-    kit = wpkit.wpkit()
+    kit = pywpkit.wpkit()
     
       
     
@@ -33,7 +33,7 @@ Python package to interact with whatsapp using different methods
 
   
 
-Visit [examples](https://github.com/rootkral4/wpkit/tree/main/examples) folder for more example
+Visit [examples](https://github.com/rootkral4/pywpkit/tree/main/examples) folder for more example
 
   
 
