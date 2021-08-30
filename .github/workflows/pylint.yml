@@ -22,7 +22,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pylint
-        
+        pip install pandas
+        pip install vobject
     - name: Analysing the code with pylint
       run: |
         python -m pylint --fail-under=10 `find -regextype egrep -regex '(.*.py)$'` |

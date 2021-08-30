@@ -102,7 +102,7 @@ class wpkit:
     def __init__(self, suppressbanner=False, adbpath="adbtools/adb.exe", chromedriverpath="chromedriver.exe", swipe=[400, 200, 400, 500]) -> None:
         """
         :suppressbanner: False -> Print banner at startup, True -> Print nothing
-        :adbpath: Path to adb ( necessary for adbmethod() and _fetchcontacts() )
+        :adbpath: Path to adb ( necessary for adbmethod() and fetchcontacts() )
         :swipe: swipe coordinates to unlock screen [x1,y1,x2,y2]
         """
         self.selenium_lock = True
@@ -180,7 +180,7 @@ class wpkit:
             call([self.adbpath, "shell", "input", "text", f"{passcode}"])
             self._sendenter()
 
-    def _fetchcontacts(self, screen_locked=False, mode=1, passcode="1234"):
+    def fetchcontacts(self, screen_locked=False, mode=1, passcode="1234"):
         """
         Fetch all contacts from phone (no-root)
 
