@@ -4,13 +4,7 @@ from time import sleep
 from subprocess import call, check_output, PIPE
 
 class ADB_Keycodes:
-    KEYCODE_HOME = "3"
-    KEYCODE_POWER = "26"
-    KEYCODE_ENTER = "66"
-    KEYCODE_MENU = "82"
     KEYCODE_UNKNOWN = "0"
-    KEYCODE_UNKNOWN = "0"
-    KEYCODE_MENU = "1"
     KEYCODE_SOFT_RIGHT = "2"
     KEYCODE_HOME = "3"
     KEYCODE_BACK = "4"
