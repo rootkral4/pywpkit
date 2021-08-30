@@ -1,5 +1,5 @@
-import webbrowser
-import keyboard
+from webbrowser import open
+from keyboard import press_and_release
 from time import sleep
 from subprocess import call, check_output, PIPE
 
@@ -14,7 +14,7 @@ class wpkit:
     def __init__(self, suppressbanner=False, adbpath="adbtools/adb.exe", swipe=[400, 200, 400, 500]) -> None:
         """
         :suppressbanner: False -> Print banner at startup, True -> Print nothing
-        :adbpath: Path to adb ( necessary for adbmethod() and _fecthcontacts() )
+        :adbpath: Path to adb ( necessary for adbmethod() and _fetchcontacts() )
         :swipe: swipe coordinates to unlock screen [x1,y1,x2,y2]
         """
         self.awake_lock = True
@@ -158,24 +158,24 @@ class wpkit:
         :morethanone: None means single number if you want to send message to multiple numbers you should give a list to this variable
         :speed: how much time to wait before sending message (15 recommended)
         """
-        print("[+] Don't touch anything !")
+        print("[+] Don't touch anything !\nStarting to send message(s)")
         if morethanone == None:
-            webbrowser.open("https://web.whatsapp.com/send?phone={}&text={}&app_absent=1".format(number, msg))
+            open("https://web.whatsapp.com/send?phone={}&text={}&app_absent=1".format(number, msg))
             sleep(speed)
-            keyboard.press_and_release('enter')
+            press_and_release('enter')
             sleep(0.5)
-            keyboard.press_and_release("ctrl + w")
+            press_and_release("ctrl + w")
         else:
-            webbrowser.open("https://web.whatsapp.com/")
+            open("https://web.whatsapp.com/")
             sleep(5)
             for num in morethanone:
-                webbrowser.open("https://web.whatsapp.com/send?phone={}&text={}&app_absent=1".format(num, msg), new=0)
+                open("https://web.whatsapp.com/send?phone={}&text={}&app_absent=1".format(num, msg), new=0)
                 sleep(speed)
-                keyboard.press_and_release('enter')
+                press_and_release('enter')
             sleep(0.5)
-            keyboard.press_and_release("ctrl + w")
+            press_and_release("ctrl + w")
         sleep(1)
-        keyboard.press_and_release('enter') # confirm exit
+        press_and_release('enter') # confirm exit
         print("[+] Done")
 
 if __name__ == "__main__":
