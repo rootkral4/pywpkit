@@ -50,7 +50,7 @@ Visit [examples](https://github.com/rootkral4/pywpkit/tree/main/examples) folder
 
 - [X] Selenium method
 
-- [ ] General code clean up
+- [X] General code clean up
 
 - [ ] ~~Maybe a chrome extension that sends message when requested from main application (not sure about this)~~
 
