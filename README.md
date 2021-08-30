@@ -15,7 +15,7 @@ Python package to interact with whatsapp using different methods
 
   
 
-    cd wpkit && pip install .
+    cd pywpkit && pip install .
 
   
 
