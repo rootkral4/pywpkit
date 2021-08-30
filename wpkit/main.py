@@ -13,8 +13,6 @@ class ADB_Keycodes:
 class wpkit:
     def __init__(self, suppressbanner=False, adbpath="adbtools/adb.exe", swipe=[400, 200, 400, 500]) -> None:
         """
-        
-
         :suppressbanner: False -> Print banner at startup, True -> Print nothing
         :adbpath: Path to adb ( necessary for adbmethod() and _fecthcontacts() )
         :swipe: swipe coordinates to unlock screen [x1,y1,x2,y2]
