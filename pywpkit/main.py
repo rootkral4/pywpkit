@@ -152,23 +152,6 @@ class wpkit:
         """
         call([self.adbpath, "shell", "input", "keyevent", ADB_Keycodes.KEYCODE_HOME])
 
-    def _stayawake(self, bright=True) -> int:
-        """
-        Keep phone busy so screen will not be locked until awake_lock set to False (blocks code use thread to run this function)
-
-        :bright: True -> Set brightness to 5 while screen not locked (if awake_lock changes to false it reverts brightness level to user default), False -> Don't change brightness
-        """
-        brightness = check_output([self.adbpath, "shell", "settings", "get", "system", "screen_brightness"]) if bright == True else 100
-        if bright:
-            call([self.adbpath, "shell", "settings", "put", "system", "screen_brightness", "5"])
-        while self.awake_lock:
-            call([self.adbpath, "shell", "input", "keyevent", "mouse"])
-            sleep(5)
-        if bright:
-            call([self.adbpath, "shell", "settings", "put", "system", "screen_brightness", brightness.strip()])
-        
-        return 1
-
     def _startwp(self):
         call([self.adbpath, "shell", "am", "start", "-n", "com.whatsapp/.Main"], stdout=PIPE)
 
@@ -202,6 +185,23 @@ class wpkit:
             
         return filteredvalues
 
+    def stayawake(self, bright=True) -> int:
+        """
+        Keep phone busy so screen will not be locked until awake_lock set to False (blocks code use thread to run this function)
+
+        :bright: True -> Set brightness to 5 while screen not locked (if awake_lock changes to false it reverts brightness level to user default), False -> Don't change brightness
+        """
+        brightness = check_output([self.adbpath, "shell", "settings", "get", "system", "screen_brightness"]) if bright == True else 100
+        if bright:
+            call([self.adbpath, "shell", "settings", "put", "system", "screen_brightness", "5"])
+        while self.awake_lock:
+            call([self.adbpath, "shell", "input", "keyevent", "mouse"])
+            sleep(5)
+        if bright:
+            call([self.adbpath, "shell", "settings", "put", "system", "screen_brightness", brightness.strip()])
+        
+        return 1
+        
     def adbmethod(self, number, msg, morethanone=None, alreadyawake=False, mode=1, passcode="1234"):
         """
         for this method USB Debugging should be enabled (enable "Always trust this computer") and 
