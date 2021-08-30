@@ -24,6 +24,7 @@ jobs:
         pip install pylint
         pip install pandas
         pip install vobject
+        pip install selenium
     - name: Analysing the code with pylint
       run: |
         python -m pylint --fail-under=10 `find -regextype egrep -regex '(.*.py)$'` |

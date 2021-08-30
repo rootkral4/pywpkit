@@ -7,4 +7,3 @@ Thread(target=kit.stayawake).start()
 
 sleep(20) # sleep for 20 seconds
 kit.awake_lock = False # release thread lock to stop thread
-

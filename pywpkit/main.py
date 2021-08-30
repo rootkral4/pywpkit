@@ -1,8 +1,7 @@
 from webbrowser import open
-from keyboard import press_and_release
 from time import sleep
 from subprocess import call, check_output, PIPE
-
+from keyboard import press_and_release
 #selenium
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -11,7 +10,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class ADB_Keycodes:
+class Adbkeycodes:
     KEYCODE_UNKNOWN = "0"
     KEYCODE_SOFT_RIGHT = "2"
     KEYCODE_HOME = "3"
@@ -99,7 +98,8 @@ class ADB_Keycodes:
     TAG_LAST_KEYCODE = "85"
 
 class wpkit:
-    def __init__(self, suppressbanner=False, adbpath="adbtools/adb.exe", chromedriverpath="chromedriver.exe", swipe=[400, 200, 400, 500]) -> None:
+    def __init__(self, suppressbanner=False, adbpath="adbtools/adb.exe",
+    chromedriverpath="chromedriver.exe", swipe=[400, 200, 400, 500]) -> None:
         """
         :suppressbanner: False -> Print banner at startup, True -> Print nothing
         :adbpath: Path to adb ( necessary for adbmethod() and fetchcontacts() )
@@ -126,7 +126,6 @@ class wpkit:
             """
             print(banner)
         self._startadbserver()
-    
     def _startadbserver(self) -> None:
         """
         Start ADB daemon
@@ -137,29 +136,31 @@ class wpkit:
         """
         Send POWER key through adb
         """
-        call([self.adbpath, "shell", "input", "keyevent", ADB_Keycodes.KEYCODE_POWER])
-        call([self.adbpath, "shell", "input", "keyevent", ADB_Keycodes.KEYCODE_MENU])
+        call([self.adbpath, "shell", "input", "keyevent", Adbkeycodes.KEYCODE_POWER])
+        call([self.adbpath, "shell", "input", "keyevent", Adbkeycodes.KEYCODE_MENU])
 
     def _sendenter(self) -> None:
         """
         Send ENTER key through adb
         """
-        call([self.adbpath, "shell", "input", "keyevent", ADB_Keycodes.KEYCODE_ENTER])
+        call([self.adbpath, "shell", "input", "keyevent", Adbkeycodes.KEYCODE_ENTER])
 
     def _returnhome(self) -> None:
         """
         Send HOME key through adb
         """
-        call([self.adbpath, "shell", "input", "keyevent", ADB_Keycodes.KEYCODE_HOME])
+        call([self.adbpath, "shell", "input", "keyevent", Adbkeycodes.KEYCODE_HOME])
 
     def _startwp(self):
         call([self.adbpath, "shell", "am", "start", "-n", "com.whatsapp/.Main"], stdout=PIPE)
 
     def _unlockscreen(self, mode, passcode=1234):
         if mode == 1:
-            call([self.adbpath, "shell", "input", "touchscreen", "swipe", str(self.swipe[0]), str(self.swipe[1]), str(self.swipe[2]), str(self.swipe[3])])
+            call([self.adbpath, "shell", "input", "touchscreen", "swipe",
+                str(self.swipe[0]), str(self.swipe[1]), str(self.swipe[2]), str(self.swipe[3])])
         elif mode == 2:
-            call([self.adbpath, "shell", "input", "touchscreen", "swipe", str(self.swipe[0]), str(self.swipe[1]), str(self.swipe[2]), str(self.swipe[3])])
+            call([self.adbpath, "shell", "input", "touchscreen", "swipe",
+                str(self.swipe[0]), str(self.swipe[1]), str(self.swipe[2]), str(self.swipe[3])])
             call([self.adbpath, "shell", "input", "text", f"{passcode}"])
             self._sendenter()
 
@@ -167,7 +168,8 @@ class wpkit:
         """
         Fetch all contacts from phone (no-root)
 
-        :screen_locked: False -> fetch contacts now (use this if screen already unlocked), True -> Unlock screen then fetch contacts (use this if screen locked or won't fetching while locked)
+        :screen_locked: False -> fetch contacts now (use this if screen already unlocked),
+        True -> Unlock screen then fetch contacts (use this if screen locked or won't fetching while locked)
         :mode: 1 - Swipe to unlock, 2 - Passcode (change passcode variable)
         :passcode: Passcode to unlock (not required for swipe)
         """
@@ -175,11 +177,15 @@ class wpkit:
             self._powerup()
             self._unlockscreen(mode, passcode)
             self._sendenter()
-            ret = check_output([self.adbpath, "shell", "content", "query", "--uri", "content://com.android.contacts/data", "--projection", "display_name:data1:data4:contact_id"])
+            ret = check_output([self.adbpath, "shell", "content", "query",
+                "--uri", "content://com.android.contacts/data",
+                "--projection", "display_name:data1:data4:contact_id"])
             values = ret.decode().splitlines()
             filteredvalues = list(filter(None, values))
         else:
-            ret = check_output([self.adbpath, "shell", "content", "query", "--uri", "content://com.android.contacts/data", "--projection", "display_name:data1:data4:contact_id"])
+            ret = check_output([self.adbpath, "shell", "content", "query",
+                "--uri", "content://com.android.contacts/data", "--projection",
+                "display_name:data1:data4:contact_id"])
             values = ret.decode().splitlines()
             filteredvalues = list(filter(None, values))
             
@@ -187,21 +193,26 @@ class wpkit:
 
     def stayawake(self, bright=True) -> int:
         """
-        Keep phone busy so screen will not be locked until awake_lock set to False (blocks code use thread to run this function)
+        Keep phone busy so screen will not be locked until awake_lock set to False 
+        (blocks code use thread to run this function)
 
-        :bright: True -> Set brightness to 5 while screen not locked (if awake_lock changes to false it reverts brightness level to user default), False -> Don't change brightness
+        :bright: True -> Set brightness to 5 while screen not locked 
+        (if awake_lock changes to false it reverts brightness level to user default),
+        False -> Don't change brightness
         """
-        brightness = check_output([self.adbpath, "shell", "settings", "get", "system", "screen_brightness"]) if bright == True else 100
+        brightness = check_output([self.adbpath, "shell", "settings",
+                                "get", "system", "screen_brightness"]) if bright == True else 100
         if bright:
             call([self.adbpath, "shell", "settings", "put", "system", "screen_brightness", "5"])
         while self.awake_lock:
             call([self.adbpath, "shell", "input", "keyevent", "mouse"])
             sleep(5)
         if bright:
-            call([self.adbpath, "shell", "settings", "put", "system", "screen_brightness", brightness.strip()])
+            call([self.adbpath, "shell", "settings", "put", "system",
+                "screen_brightness", brightness.strip()])
         
         return 1
-        
+
     def adbmethod(self, number, msg, morethanone=None, alreadyawake=False, mode=1, passcode="1234"):
         """
         for this method USB Debugging should be enabled (enable "Always trust this computer") and 
@@ -212,7 +223,8 @@ class wpkit:
         :alreadyawake: True -> Screen already unlocked, False -> Unlock screen
         :mode: 1 - Swipe to unlock, 2 - Passcode (change passcode variable)
         :passcode: Passcode to unlock (not required for swipe)
-        :bulk: None means single number if you want to send message to multiple numbers you should give a list to bulk
+        :bulk: None means single number 
+        if you want to send message to multiple numbers you should give a list to bulk
         :speed: how much time to wait before sending message (10 recommended for standart networks)
         """
     
@@ -224,7 +236,9 @@ class wpkit:
             self._startwp()
             sleep(1)
             call([self.adbpath, "shell", "am", "start", "-a", "android.intent.action.SEND",
-            "-c", "android.intent.category.DEFAULT", "-t", "text/plain", "-e", "jid", jid, "-e", "android.intent.extra.TEXT", f"\"{msg}\"", "-p", "com.whatsapp"], stdout=PIPE)
+                "-c", "android.intent.category.DEFAULT", "-t", "text/plain",
+                "-e", "jid", jid, "-e", "android.intent.extra.TEXT",
+                f"\"{msg}\"", "-p", "com.whatsapp"], stdout=PIPE)
             sleep(1.5)
             self._sendenter()
             self._returnhome()

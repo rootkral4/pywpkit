@@ -1,1 +1,1 @@
-from wpkit.main import wpkit
+from main import wpkit
