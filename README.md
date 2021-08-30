@@ -25,7 +25,7 @@ Python package to interact with whatsapp using different methods
 
     import wpkit
     
-    kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
+    kit = wpkit.wpkit()
     
       
     
