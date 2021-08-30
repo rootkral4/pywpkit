@@ -56,7 +56,7 @@ class wpkit:
         """
         call([self.adbpath, "shell", "input", "keyevent", ADB_Keycodes.KEYCODE_ENTER])
 
-    def _sendenter(self) -> None:
+    def _returnhome(self) -> None:
         """
         Send HOME key through adb
         """

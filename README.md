@@ -1,4 +1,4 @@
-# wpkit (Whatsapp kit)
+# WPKIT (Whatsapp kit)
 
 ![wpkit banner](https://cdn.discordapp.com/attachments/739498862477312001/881784328927969310/unknown.png)
 
