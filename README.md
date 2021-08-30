@@ -15,7 +15,7 @@ Python package to interact with whatsapp using different methods
 
   
 
-cd wpkit && pip install .
+    cd wpkit && pip install .
 
   
 
@@ -23,13 +23,13 @@ cd wpkit && pip install .
 
   
 
-import wpkit
-
-kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
-
-  
-
-kit.wbrowsermethod("90537xxxxxxx", "Hi")
+    import wpkit
+    
+    kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
+    
+      
+    
+    kit.wbrowsermethod("90537xxxxxxx", "Hi")
 
   
 
