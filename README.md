@@ -29,4 +29,4 @@ Visit [examples](https://github.com/rootkral4/wpkit/tree/main/examples) folder f
 
 ##### Known bugs/problems
 
- - [ ] None for now yippee!
+ - [X] None for now yippee!
