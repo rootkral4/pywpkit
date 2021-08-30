@@ -42,13 +42,13 @@ Visit [examples](https://github.com/rootkral4/wpkit/tree/main/examples) folder f
   
 
 - [X] ADB (Android Debug Bridge)
-- [X] webbrowser (Python package)
-
+- [X] Webbrowser (Python package)
+- [X] Selenium (Python package)
   
 
 #### TO-DO
 
-- [ ] Selenium method
+- [X] Selenium method
 
 - [ ] General code clean up
 

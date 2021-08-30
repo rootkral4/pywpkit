@@ -2,6 +2,13 @@ from webbrowser import open
 from keyboard import press_and_release
 from time import sleep
 from subprocess import call, check_output, PIPE
+#selenium
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+
 
 class ADB_Keycodes:
     KEYCODE_UNKNOWN = "0"
@@ -91,15 +98,17 @@ class ADB_Keycodes:
     TAG_LAST_KEYCODE = "85"
 
 class wpkit:
-    def __init__(self, suppressbanner=False, adbpath="adbtools/adb.exe", swipe=[400, 200, 400, 500]) -> None:
+    def __init__(self, suppressbanner=False, adbpath="adbtools/adb.exe", chromedriverpath="chromedriver.exe", swipe=[400, 200, 400, 500]) -> None:
         """
         :suppressbanner: False -> Print banner at startup, True -> Print nothing
         :adbpath: Path to adb ( necessary for adbmethod() and _fetchcontacts() )
         :swipe: swipe coordinates to unlock screen [x1,y1,x2,y2]
         """
+        self.selenium_lock = True
         self.awake_lock = True
         self.swipe = swipe
         self.adbpath = adbpath
+        self.chromedriverpath = chromedriverpath
         if not suppressbanner:
             banner = """
             .----------------.  .----------------.  .----------------.  .----------------.  .----------------. 
@@ -174,8 +183,7 @@ class wpkit:
         """
         Fetch all contacts from phone (no-root)
 
-        :screen_locked: False -> fetch contacts now (use this if screen already unlocked),
-        True -> Unlock screen then fetch contacts (use this if screen locked or won't fetching while locked)
+        :screen_locked: False -> fetch contacts now (use this if screen already unlocked), True -> Unlock screen then fetch contacts (use this if screen locked or won't fetching while locked)
         :mode: 1 - Swipe to unlock, 2 - Passcode (change passcode variable)
         :passcode: Passcode to unlock (not required for swipe)
         """
@@ -257,6 +265,37 @@ class wpkit:
         sleep(1)
         press_and_release('enter') # confirm exit
         print("[+] Done")
+
+
+    def seleniummethod(self, number, msg, sendnow=True):
+        """
+        Use selenium for sending message (not recommended due to QR code scan)
+        might be usefull for send later jobs
+
+        :number: phone number to send message
+        :msg: message to send
+        :sendnow: True -> send immediately when qr code scanned, False -> Wait until selenium_lock released then send
+        """
+        def sendseleniummsg(driver):
+            driver.get(f"https://web.whatsapp.com/send?phone={number}&text={msg}&app_absent=1")
+            WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div._13NKt.copyable-text.selectable-text")))
+            driver.find_elements_by_css_selector("div._13NKt.copyable-text.selectable-text")[1].send_keys(Keys.ENTER)
+            sleep(0.5)
+            driver.quit()
+
+        driver = webdriver.Chrome(executable_path=self.chromedriverpath)
+        driver.get("https://web.whatsapp.com")
+        input("Scan QR code then press Enter key")
+        driver.minimize_window()
+        if sendnow:
+            sendseleniummsg(driver)
+        else:
+            while self.selenium_lock:
+                sleep(5)
+            sendseleniummsg(driver)
+    
+
+        
 
 if __name__ == "__main__":
     print("[!] Please don't run this file directly")
