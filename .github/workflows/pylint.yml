@@ -1,7 +1,11 @@
 name: Pylint
 
-on: [push]
-
+on:
+  push:
+    paths-ignore:
+      - 'examples/**'
+      - '**.md'
+      - 'setup.py'
 jobs:
   build:
 
