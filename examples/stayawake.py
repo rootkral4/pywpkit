@@ -5,6 +5,6 @@ import wpkit
 kit = wpkit.wpkit(adbpath=r"C:\\adbtools\adb.exe")
 Thread(target=kit._stayawake).start()
 
-sleep(20) # after 20 seconds stop thread
-kit.awake_lock = False
+sleep(20) # sleep for 20 seconds
+kit.awake_lock = False # release thread lock to stop thread
 
